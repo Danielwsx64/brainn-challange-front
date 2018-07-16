@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+
+import UserPage from './components/pages/UserPage'
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        oi
-      </div>
-    );
+      <UserPage />
+    )
   }
 }
 
-export default App;
+export default App
