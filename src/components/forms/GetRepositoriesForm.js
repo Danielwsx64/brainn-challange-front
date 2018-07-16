@@ -54,7 +54,7 @@ class GetRepositoriesForm extends Component {
 }
 
 GetRepositoriesForm.propTypes = {
-  submit: PropTypes.object.isRequerid
+  submit: PropTypes.func.isRequired
 }
 
 export default GetRepositoriesForm
