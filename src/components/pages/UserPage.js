@@ -17,7 +17,7 @@ class UserPage extends Component {
   }
 
   submitUser = user => {
-    this.props.createUser(user)
+    return this.props.createUser(user)
       .then( resp => Api.user.repositories.fetch(resp.data.id) )
       .then( data => {
         this.storeUser(data)

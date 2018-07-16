@@ -1,14 +1,24 @@
 import React, { Component } from 'react'
-import { Button, Icon, Input, Form, Progress } from 'semantic-ui-react'
+import { Button, Icon, Input, Form, Message, Progress } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
 class GetRepositoriesForm extends Component {
 
   state = {
+    error: null,
     data: {
       github_user: ''
     },
     loading: false,
+  }
+
+  handleError = () => {
+    this.setState(
+      {
+        error: { message: 'Failed on fetch user repositories' },
+        loading: false
+      }
+    )
   }
 
   onChange = e =>
@@ -20,11 +30,19 @@ class GetRepositoriesForm extends Component {
   onSubmit = e => {
     e.preventDefault()
     this.setState({loading: true})
+
     this.props.submit(this.state.data.github_user)
+      .catch( () => this.handleError() )
   }
 
   render() {
     const { data, loading } = this.state
+
+    const errorMessage = (this.state.error)?
+      <Message
+        negative
+        content={this.state.error.message} /> : ''
+
 
     if(loading)
       return(
@@ -35,6 +53,7 @@ class GetRepositoriesForm extends Component {
 
     return(
       <Form style={{ height: '100%' }} onSubmit={this.onSubmit}>
+        {errorMessage}
         <Form.Group>
           <Input
             label='https://github.com/'
