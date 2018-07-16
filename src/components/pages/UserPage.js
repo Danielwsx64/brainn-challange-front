@@ -11,10 +11,18 @@ import Api from '../../Api.js'
 
 class UserPage extends Component {
 
+  storeUser = data => {
+    localStorage.user_id = this.props.user.id
+    localStorage.user_name = this.props.user.name
+  }
+
   submitUser = user => {
     this.props.createUser(user)
       .then( resp => Api.user.repositories.fetch(resp.data.id) )
-      .then( () => console.log('redirecionar') )
+      .then( data => {
+        this.storeUser(data)
+        this.props.history.push('/repositories')
+      })
   }
 
   render() {
@@ -40,7 +48,12 @@ class UserPage extends Component {
 
 UserPage.propTypes = {
   createUser: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 }
+
+const mapStateToProps = store => ({
+  user: store.user
+})
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
@@ -48,4 +61,4 @@ const mapDispatchToProps = dispatch => {
   }, dispatch)
 }
 
-export default connect(null, mapDispatchToProps)(UserPage)
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage)
