@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -19,8 +19,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Route path='/' exact component={UserPage} />
-        <Route path='/repositories' exact component={RepositoryPage} />
+        <Switch>
+          <Route path='/' exact component={UserPage} />
+          <Route path='/repositories' exact component={RepositoryPage} />
+        </Switch>
       </div>
       )
   }

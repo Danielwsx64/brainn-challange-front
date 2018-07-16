@@ -21,7 +21,8 @@ class UserPage extends Component {
       .then( resp => Api.user.repositories.fetch(resp.data.id) )
       .then( data => {
         this.storeUser(data)
-        this.props.history.push('/repositories')
+        window.location.href = '/repositories'
+        // this.props.history.push('/repositories')
       })
   }
 
