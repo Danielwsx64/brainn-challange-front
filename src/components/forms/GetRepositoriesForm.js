@@ -23,7 +23,7 @@ class GetRepositoriesForm extends Component {
 
   onChange = e =>
     this.setState({
-      data: { ...this.state.data, [e.target.name]: e.target.value  },
+      data: { ...this.state.data, [e.target.name]: e.target.value },
       loading: false
     })
 

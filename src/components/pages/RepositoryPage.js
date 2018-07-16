@@ -9,9 +9,18 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getUserRepositories } from '../../actions/User'
 
+import Api from '../../Api'
+
 class RepositoryPage extends Component {
 
   submitSearch = tag => ( console.log(tag) )
+
+  submitTags = data =>
+    Api.user.repositories.tags.update({
+      ...data,
+      user_id: this.props.user.id
+    })
+      .then( () => this.props.getUserRepositories(this.props.user.id))
 
   componentWillMount() {
     this.props.getUserRepositories(this.props.user.id)
@@ -36,7 +45,9 @@ class RepositoryPage extends Component {
         <Grid>
           <Grid.Column>
 
-            <RepositoriesTable repositories={repositories} />
+            <RepositoriesTable
+              repositories={repositories}
+              submitTags={this.submitTags} />
 
           </Grid.Column>
         </Grid>

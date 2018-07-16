@@ -2,7 +2,17 @@ import React, { Component } from 'react'
 import { Table } from 'semantic-ui-react'
 import PropTypes from 'prop-types'
 
+import EditTagsModal from './EditTagsModal'
 class RepositoriesTableLine extends Component {
+
+  submitTags = tags => {
+    const { repository, submitTags } = this.props
+
+    return submitTags({
+      repository_id: repository.id,
+      tags: tags
+    })
+  }
 
   render() {
     const { repository } = this.props
@@ -10,6 +20,8 @@ class RepositoriesTableLine extends Component {
     const tags = repository.tags.map(function(tag){
       return `#${tag.name}`
     }).join(', ')
+
+    const plain_tags = tags.replace(/#/g,'')
 
     return (
       <Table.Row>
@@ -33,7 +45,10 @@ class RepositoriesTableLine extends Component {
         </Table.Cell>
 
         <Table.Cell>
-          <a>Edit</a>
+          <EditTagsModal
+            tags={plain_tags}
+            repository_name={repository.name}
+            submitTags={this.submitTags}/>
         </Table.Cell>
       </Table.Row>
       )
@@ -41,6 +56,7 @@ class RepositoriesTableLine extends Component {
 }
 
 RepositoriesTableLine.propTypes = {
+  submitTags: PropTypes.func.isRequired,
   repository: PropTypes.shape({
     id: PropTypes.number.isRequired,
     github_id: PropTypes.number,

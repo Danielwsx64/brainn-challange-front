@@ -11,12 +11,21 @@ const fetchUserRepositories = user_id =>
 const getUserRepositories = user_id =>
   axios.get(`${api_url}/users/${user_id}/repositories`)
 
+const updateUserRepositoryTags = (data) =>
+  axios.patch(
+    `${api_url}/users/${data.user_id}/repositories/${data.repository_id}`,
+    { repository: { tags: data.tags } }
+  )
+
 export default {
   user: {
     create: createUser,
     repositories: {
       fetch: fetchUserRepositories,
-      get: getUserRepositories
+      get: getUserRepositories,
+      tags:{
+        update: updateUserRepositoryTags
+      }
     }
   }
 }

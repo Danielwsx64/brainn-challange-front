@@ -7,10 +7,12 @@ import RepositoriesTableLine from './RepositoriesTableLine'
 class RepositoriesTable extends Component {
 
   render() {
-    const { repositories } = this.props
+    const { repositories, submitTags } = this.props
 
     const repositoriesList = repositories.map(function(repository){
-      return <RepositoriesTableLine repository={repository}/>
+      return <RepositoriesTableLine
+        submitTags={submitTags}
+        repository={repository} />
     })
 
     return (
@@ -34,6 +36,7 @@ class RepositoriesTable extends Component {
 }
 
 RepositoriesTable.propTypes = {
+  submitTags: PropTypes.func.isRequired,
   repositories: PropTypes.array.isRequired
 }
 
