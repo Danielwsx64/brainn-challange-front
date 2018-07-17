@@ -1,0 +1,12 @@
+version: '3'
+services:
+  challange-front:
+    build: .
+    image: challange_front
+    command: npm start
+    volumes:
+      - .:/var/www/challange-front
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:4000/api/v1

@@ -1,6 +1,8 @@
 import axios from 'axios'
 
-const api_url = 'http://localhost:4000/api/v1'
+const env_url = process.env.REACT_APP_API_URL
+
+const api_url = (env_url)? env_url : 'http://localhost:4000/api/v1'
 
 const createUser = user_name =>
   axios.post(`${api_url}/users`, { user: { name: user_name } })
