@@ -7,20 +7,26 @@ import RepositoriesTable from '../RepositoriesTable'
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getUserRepositories } from '../../actions/User'
+import { getUserRepositories, searchUserRepositories } from '../../actions/User'
 
 import Api from '../../Api'
 
 class RepositoryPage extends Component {
 
-  submitSearch = tag => ( console.log(tag) )
+  submitSearch = tag => {
+    const { getUserRepositories, searchUserRepositories, user } = this.props
+
+    if(tag === '')
+      getUserRepositories(user.id)
+    else
+      searchUserRepositories({ user_id: user.id, tag: tag })
+  }
 
   submitTags = data =>
     Api.user.repositories.tags.update({
       ...data,
       user_id: this.props.user.id
-    })
-      .then( () => this.props.getUserRepositories(this.props.user.id))
+    }).then( () => this.props.getUserRepositories(this.props.user.id))
 
   componentWillMount() {
     this.props.getUserRepositories(this.props.user.id)
@@ -35,8 +41,11 @@ class RepositoryPage extends Component {
 
         <Grid>
           <Grid.Column floated='left' width={5}>
+
             <SearchForm submit={this.submitSearch}/>
+
           </Grid.Column>
+
           <Grid.Column floated='right' width={2}>
             <a href='/'> Home</a>
           </Grid.Column>
@@ -67,6 +76,7 @@ const mapStateToProps = store => ({
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
     getUserRepositories,
+    searchUserRepositories
   }, dispatch)
 }
 

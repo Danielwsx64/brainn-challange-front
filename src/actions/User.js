@@ -31,3 +31,10 @@ export const getUserRepositories = user_id => {
       .then( res => dispatch(updateRepositories(res.data)) )
   }
 }
+
+export const searchUserRepositories = data => {
+  return dispatch => {
+    return Api.user.repositories.search(data)
+      .then( res => dispatch(updateRepositories(res.data)) )
+  }
+}
