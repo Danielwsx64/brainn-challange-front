@@ -3,7 +3,7 @@ services:
   challange-front:
     build: .
     image: challange_front
-    command: npm start
+    command: bash -c 'cp -r /var/www/challange-front/* . && npm start'
     volumes:
       - .:/var/www/challange-front
     ports:
